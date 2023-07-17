@@ -1,6 +1,7 @@
 #i have created this file -Agnik
 from django.http import HttpResponse
 from django.shortcuts import render
+import sql_data
 def index(request):
     
     return render(request,'index.html')
@@ -33,10 +34,10 @@ def analyze(request):
     full_caps = request.GET.get('fullcaps', 'off')
     newline_remover = request.GET.get('newlineremover', 'off')
     
-    #analyzed_text = djtext
+    analyzed_text = djtext
     
     if remove_punc == "on":
-        analyzed_text = removepunc(djtext)
+        analyzed_text = removepunc(analyzed_text)
        # print(analyzed_text)
     if full_caps == 'on':
         analyzed_text = fullcaps(analyzed_text)
@@ -49,6 +50,17 @@ def analyze(request):
     
     params = {'purpose': 'Analyzed Text', 'analyzed_text': analyzed_text}
     return render(request, 'analyze.html', params)
+def about_us(request):
+    return render(request,"about_us.html")
+def contact_us(request):
+
+    return render(request,'contact_us.html')
+def submit(request):
+    email = request.GET.get('email', 'default')
+    message=request.GET.get('message','default')
+    sql_data.write_data({"email":email,"message":message})
+    params={"message":"Message Sent!!"}
+    return render(request,'contact_us.html',params)
 
 
 '''def capfirst(request):
