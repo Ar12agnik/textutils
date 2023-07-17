@@ -5,24 +5,51 @@ def index(request):
     
     return render(request,'index.html')
     #return HttpResponse("Home <a href='/removepunc'>removepunc</a> <a href='/capitalizefirst'>capfirst</a> <a href='/newlineremove'>newlineremove</a><a href='/spaceremove'>spaceremove</a><a href='/charcount'>charcount</a>")
+def removepunc(text):
+    analyzed = ''
+    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+    for char in text:
+        if char not in punctuations:
+            analyzed += char
+    return analyzed
+
+def fullcaps(text):
+    analyzed = ''
+    for char in text:
+        analyzed += char.upper()
+    return analyzed
+
+def newlineremover(text):
+    analyzed = ''
+    for char in text:
+        if char != "\n":
+            analyzed += char
+    return analyzed
 
 def analyze(request):
-    #get the text
-    djtext=request.GET.get('text','default')
-    removepunc=request.GET.get('removepunc','off')
-    print(removepunc)
-    #analize the text
-    print(djtext)
-    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
-    analyzed=''
-    if removepunc=="on":
-        for char in djtext:
-            if char not in punctuations:
-                analyzed=analyzed+char
-        params={'pourpose':'remove puncuation','analyzed_text':analyzed}
-        return render(request,"analyze.html",params)
-    else:
-        return HttpResponse("ERROR")
+    # Get the text
+    djtext = request.GET.get('text', 'default')
+    remove_punc = request.GET.get('removepunc', 'off')
+    full_caps = request.GET.get('fullcaps', 'off')
+    newline_remover = request.GET.get('newlineremover', 'off')
+    
+    #analyzed_text = djtext
+    
+    if remove_punc == "on":
+        analyzed_text = removepunc(djtext)
+       # print(analyzed_text)
+    if full_caps == 'on':
+        analyzed_text = fullcaps(analyzed_text)
+      #  print(analyzed_text)
+    if newline_remover == 'on':
+        analyzed_text = newlineremover(analyzed_text)
+     #   print(analyzed_text)
+
+    #print(analyzed_text)
+    
+    params = {'purpose': 'Analyzed Text', 'analyzed_text': analyzed_text}
+    return render(request, 'analyze.html', params)
+
 
 '''def capfirst(request):
     return HttpResponse("capitalize first <a href='..'>home</a>")
