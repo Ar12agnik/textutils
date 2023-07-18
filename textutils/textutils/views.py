@@ -23,16 +23,16 @@ def fullcaps(text):
 def newlineremover(text):
     analyzed = ''
     for char in text:
-        if char != "\n":
+        if char != "\n" and char!='\r':
             analyzed += char
     return analyzed
 
 def analyze(request):
     # Get the text
-    djtext = request.GET.get('text', 'default')
-    remove_punc = request.GET.get('removepunc', 'off')
-    full_caps = request.GET.get('fullcaps', 'off')
-    newline_remover = request.GET.get('newlineremover', 'off')
+    djtext = request.POST.get('text', 'default')
+    remove_punc = request.POST.get('removepunc', 'off')
+    full_caps = request.POST.get('fullcaps', 'off')
+    newline_remover = request.POST.get('newlineremover', 'off')
     
     analyzed_text = djtext
     
@@ -56,8 +56,8 @@ def contact_us(request):
 
     return render(request,'contact_us.html')
 def submit(request):
-    email = request.GET.get('email', 'default')
-    message=request.GET.get('message','default')
+    email = request.POST.get('email', 'default')
+    message=request.POST.get('message','default')
     sql_data.write_data({"email":email,"message":message})
     params={"message":"Message Sent!!"}
     return render(request,'contact_us.html',params)
