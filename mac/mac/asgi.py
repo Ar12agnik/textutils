@@ -1,5 +1,5 @@
 """
-ASGI config for Agnik_ecom_services project.
+ASGI config for mac project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Agnik_ecom_services.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mac.settings")
 
 application = get_asgi_application()
