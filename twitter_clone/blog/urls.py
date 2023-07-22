@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path("", views.index,name='Twitter-clone'),
-    
+    path("create_post",views.create_post,name='twitter_home')
 ]

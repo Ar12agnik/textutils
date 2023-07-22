@@ -22,26 +22,31 @@
                     <a class="nav-link active" aria-current="true" href="#">Active</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="profile.html">profile</a>
+                    <a class="nav-link" href="profile">profile</a>
                 </li>
 
             </ul>
         </div>
         <div class="container mt-4">
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                <form action="/create_post" method="post"> {% csrf_token %}
+                    <textarea class="form-control" placeholder="What is your name?" id="floatingTextarea2" name='author'
+                    style="height: 10px"></textarea>
+                <textarea class="form-control mt-2" placeholder="What's on Your Mind?" id="floatingTextarea2" name='content'
                     style="height: 100px"></textarea>
-                <label for="floatingTextarea2">What's on Your Mind?</label>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
                     <button class="btn btn-primary me-md-2" type="submit">Post</button>
                 </div>
+                </form>
             </div>
             {% for tweet in tweets %}
             <div class="card mt-2">
                 <p class='mt-1'>{{ tweet.author_name }}</p>
                 <div class="card-body">
-                    {{ tweet.content }}
-                    {{ tweet.pub_date }}
+
+                    {{ tweet.content }}&nbsp;
+                    <p style="color:rgb(4, 100, 255)">{{ tweet.pub_date }}</p>
+
                 </div>
             </div>
             {% endfor %}
